@@ -1,0 +1,37 @@
+//
+// Created by pc on 22-10-21.
+//
+
+#include "SpeedTest.h"
+
+#include "Permutation.h"
+
+#include <chrono>
+#include <iomanip>
+#include <iostream>
+
+using namespace std::chrono;
+
+//    1                   40             	152            	1369           	13915          	153615         	1982482
+
+namespace prm {
+
+    void SpeedTest::mallows(double q) {
+        size_t n = 100;
+        std::cout << std::setw(20) << std::left << q;
+        for (size_t j = 0; j != 5; ++j) {
+            std::list<size_t> vec;
+            for (size_t i = 0; i != n; ++i) {
+                vec.push_back(i);
+            }
+            auto start = high_resolution_clock::now();
+            prm::mallows_random_permutation(q, vec.begin(), vec.end());
+            auto stop     = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stop - start);
+            std::cout << std::setw(15) << std::left << duration.count() << "\t";
+            n *= 10;
+        }
+        std::cout << "\n";
+    }
+
+} // namespace prm
