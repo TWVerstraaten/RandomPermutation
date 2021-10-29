@@ -13,6 +13,7 @@
 
 namespace prm::impl {
 
+    ///  Helper struct that stores if an iterator is in fact a random access iterator
     template <class It>
     struct IsRandomAccessIterator {
         static const bool m_value = std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>;

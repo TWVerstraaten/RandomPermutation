@@ -8,7 +8,7 @@
 
 namespace prm::impl {
 
-    MallowsBase::MallowsBase(const double q, size_t unmatched) : m_q(q), m_log_q(std::log(m_q)), m_unmatched(unmatched) {
+    MallowsBase::MallowsBase(const double q, size_t number_of_elements) : m_q(q), m_log_q(std::log(m_q)), m_unmatched(number_of_elements) {
     }
 
 } // namespace prm::impl

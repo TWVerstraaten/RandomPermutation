@@ -10,18 +10,28 @@
 
 namespace prm::impl {
 
+    /// Base class containing some non template data members used in generating a Mallows permutation
     class MallowsBase {
 
       protected:
-        MallowsBase(double q, size_t unmatched);
+        /// \param q The parameter used to generate the random Mallows permutation
+        /// \param number_of_elements Number of elements to permute
+        MallowsBase(double q, size_t number_of_elements);
 
+        /// Returns log_q(x)
+        ///
+        /// \param x The argument
+        /// \return log_q(x)
         [[nodiscard]] inline double log_base_q(double x) const {
             return std::log(x) / m_log_q;
         }
 
+        /// The parameter used to generate the random Mallows permutation
         const double m_q;
+        /// log_q
         const double m_log_q;
-        size_t       m_unmatched;
+        /// Number of elements unmatched during the stepwise generation of Mallows permutation. Initially equals total number of elements in the range
+        size_t m_unmatched;
     };
 
 } // namespace prm::impl

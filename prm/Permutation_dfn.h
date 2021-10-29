@@ -21,7 +21,7 @@ namespace prm {
     }
 
     template <class It, class Gen>
-    void mallows_random_permutation(double q, It first, It last, Gen&& random_generator) {
+    void mallows_random_permutation(const double q, It first, It last, Gen&& random_generator) {
         assert(q > 0);
         if (q == 1.0) {
             uniform_random_permutation(first, last, std::forward<Gen>(random_generator));

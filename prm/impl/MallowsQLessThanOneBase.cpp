@@ -10,7 +10,7 @@
 
 namespace prm::impl {
 
-    MallowsQLessThanOneBase::MallowsQLessThanOneBase(double q, size_t unmatched) : MallowsBase(q, unmatched) {
+    MallowsQLessThanOneBase::MallowsQLessThanOneBase(double q, size_t number_of_elements) : MallowsBase(q, number_of_elements) {
     }
 
     size_t MallowsQLessThanOneBase::get_k(const double uniform_zero_one) const {

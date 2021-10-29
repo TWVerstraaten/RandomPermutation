@@ -8,7 +8,7 @@
 
 namespace prm::impl {
 
-    MallowsQGreaterThenOneBase::MallowsQGreaterThenOneBase(double q, size_t unmatched)
+    MallowsQGreaterThenOneBase::MallowsQGreaterThenOneBase(const double q, size_t unmatched)
         : MallowsBase(q, unmatched), m_safe_power_limit(std::min(floor_of_non_negative(this->log_base_q(std::numeric_limits<double>::max()) - 1), this->m_unmatched)) {
     }
 
