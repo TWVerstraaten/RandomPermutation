@@ -14,7 +14,7 @@ namespace prm::impl {
     }
 
     size_t MallowsQLessThanOneBase::get_k(const double uniform_zero_one) const {
-        return clamp(ceil_of_non_negative(log_base_q(1.0 - uniform_zero_one * (1.0 - std::pow(m_q, m_unmatched)))), 1ul, m_unmatched) - 1;
+        return math::clamp(math::ceil_of_non_negative(log_base_q(1.0 - uniform_zero_one * (1.0 - std::pow(m_q, m_unmatched)))), 1ul, m_unmatched) - 1;
     }
 
 } // namespace prm::impl

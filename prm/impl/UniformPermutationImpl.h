@@ -24,7 +24,7 @@ namespace prm::impl {
         // Permute in place
         auto unmatched = std::distance(first, last);
         for (; unmatched > 1; ++first, --unmatched) {
-            const auto k = floor_of_non_negative(unmatched * random_generator());
+            const auto k = math::floor_of_non_negative(unmatched * random_generator());
             std::swap(*first, *(first + k)); // This is too expensive for list or forward_list
         }
     }

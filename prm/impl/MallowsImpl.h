@@ -10,8 +10,6 @@
 #include "MallowsQLessThanOneBase.h"
 
 #include <cassert>
-#include <deque>
-#include <vector>
 
 namespace prm::impl {
 
@@ -20,8 +18,8 @@ namespace prm::impl {
     /// \tparam It Iterator type of input
     /// \tparam Gen Generator of random numbers in the range [0,1]
     /// \tparam Base Can be either MallowsQGreaterThenOneBase or MallowsQLessThanOneBase
-    /// \tparam CopyCon Type of container into which the range will be copied
-    template <class It, class Gen, class Base, class CopyCon>
+    /// \tparam Copy Type of container into which the range will be copied
+    template <class It, class Gen, class Base, class Copy>
     class MallowsImpl : private Base {
 
       public:
@@ -32,7 +30,7 @@ namespace prm::impl {
         /// \param last iterator at end of range
         /// \param random_generator Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
         static void permute(const double q, It first, It last, Gen&& generator) {
-            MallowsImpl<It, Gen, Base, CopyCon> g(q, first, last, std::move(generator));
+            MallowsImpl<It, Gen, Base, Copy> g(q, first, last, std::move(generator));
             g.do_permute();
         }
 
@@ -58,14 +56,14 @@ namespace prm::impl {
         /// Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
         Gen m_random_generator;
         /// Object containing the copied range
-        CopyIntoContainer<It, CopyCon> m_copiedContainer;
+        Copy m_copiedContainer;
     };
 
     template <class It, class Gen>
-    using MallowsImplQGreaterThanOne = impl::MallowsImpl<It, Gen, impl::MallowsQGreaterThenOneBase, std::vector<typename It::value_type>>;
+    using MallowsImplQGreaterThanOne = impl::MallowsImpl<It, Gen, impl::MallowsQGreaterThenOneBase, impl::CopyIntoVector<It>>;
 
     template <class It, class Gen>
-    using MallowsImplQLessThanOne = impl::MallowsImpl<It, Gen, impl::MallowsQLessThanOneBase, std::deque<typename It::value_type>>;
+    using MallowsImplQLessThanOne = impl::MallowsImpl<It, Gen, impl::MallowsQLessThanOneBase, impl::CopyIntoDeque<It>>;
 
 } // namespace prm::impl
 

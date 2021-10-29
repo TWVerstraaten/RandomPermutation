@@ -24,9 +24,11 @@ namespace prm::extra {
                 vec.push_back(i);
             }
             auto start = high_resolution_clock::now();
-            prm::mallows_random_permutation(q, vec.begin(), vec.end());
+            for (size_t dummy = 0; dummy != 7; ++dummy) {
+                prm::mallows_random_permutation(q, vec.begin(), vec.end());
+            }
             auto stop     = high_resolution_clock::now();
-            auto duration = duration_cast<microseconds>(stop - start);
+            auto duration = duration_cast<microseconds>(stop - start) / 7;
             std::cout << std::setw(15) << std::left << duration.count() << "\t";
             n *= 10;
         }

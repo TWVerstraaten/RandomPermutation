@@ -5,9 +5,12 @@
 #ifndef H_PRM_IMPL_COPYINTOCONTAINER_H
 #define H_PRM_IMPL_COPYINTOCONTAINER_H
 
+#include <deque>
+#include <vector>
+
 namespace prm::impl {
 
-    /// Object to store a copy of an input into a given container
+    /// Object to store a copy of an iterator range into a given container
     ///
     /// \tparam It Input iterator type
     /// \tparam Con Container type to store copy in
@@ -30,6 +33,13 @@ namespace prm::impl {
         /// Container containing the copy
         Con m_copy;
     };
+
+    template <class It>
+    using CopyIntoVector = CopyIntoContainer<It, std::vector<typename It::value_type>>;
+
+    template <class It>
+    using CopyIntoDeque = CopyIntoContainer<It, std::deque<typename It::value_type>>;
+
 } // namespace prm::impl
 
 #endif // H_PRM_IMPL_COPYINTOCONTAINER_H
