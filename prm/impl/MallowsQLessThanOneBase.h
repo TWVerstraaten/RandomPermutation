@@ -15,7 +15,7 @@ namespace prm::impl {
         MallowsQLessThanOneBase(double q, size_t unmatched);
 
       protected:
-        [[nodiscard]] size_t get_k(double uniform_zero_one) const;
+        [[nodiscard]] size_t get_k(double uniform_zero_one) const ;
     };
 
 } // namespace prm::impl

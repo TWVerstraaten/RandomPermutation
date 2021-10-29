@@ -2,15 +2,15 @@
 // Created by pc on 22-10-21.
 //
 
-#ifndef H_PRM_TOOLS_H
-#define H_PRM_TOOLS_H
+#ifndef H_PRM_EXTRA_TOOLS_H
+#define H_PRM_EXTRA_TOOLS_H
 
 #include <cstddef>
 #include <iterator>
 #include <limits>
 #include <vector>
 
-namespace prm {
+namespace prm::extra {
 
     size_t element_in_triangle(const std::vector<size_t>& p);
 
@@ -38,6 +38,6 @@ namespace prm {
         return count;
     }
 
-} // namespace prm
+} // namespace prm::extra
 
-#endif // H_PRM_TOOLS_H
+#endif // H_PRM_EXTRA_TOOLS_H

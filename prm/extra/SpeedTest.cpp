@@ -4,24 +4,22 @@
 
 #include "SpeedTest.h"
 
-#include "Permutation.h"
+#include "../Permutation.h"
 
 #include <chrono>
 #include <iomanip>
 #include <iostream>
+#include <list>
 
 using namespace std::chrono;
 
-namespace prm {
-
-    //        0.9                 67             	387            	3800           	36317          	378683         	4554884
-    //        1.1                 53             	459            	4575           	44179          	445295         	5488754
+namespace prm::extra {
 
     void SpeedTest::mallows(double q) {
         size_t n = 100;
         std::cout << std::setw(20) << std::left << q;
         for (size_t j = 0; j != 6; ++j) {
-            std::vector<size_t> vec;
+            std::list<size_t> vec;
             for (size_t i = 0; i != n; ++i) {
                 vec.push_back(i);
             }
@@ -35,4 +33,4 @@ namespace prm {
         std::cout << "\n";
     }
 
-} // namespace prm
+} // namespace prm::extra

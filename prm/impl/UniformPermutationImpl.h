@@ -2,12 +2,13 @@
 // Created by pc on 22-10-21.
 //
 
-#ifndef H_PRM_IMPL_UNIFORMPERMUTATION_H
-#define H_PRM_IMPL_UNIFORMPERMUTATION_H
+#ifndef H_PRM_IMPL_UNIFORMPERMUTATIONIMPL_H
+#define H_PRM_IMPL_UNIFORMPERMUTATIONIMPL_H
 
 #include "Math.h"
 
 #include <algorithm>
+#include <iostream>
 #include <vector>
 
 namespace prm::impl {
@@ -30,11 +31,11 @@ namespace prm::impl {
     template <class It, class Gen>
     std::enable_if_t<!IsRandomAccessIterator<It>::m_value, void> uniform_random_permutation_impl(It first, It last, Gen&& random_generator) {
         // Copy first into deque, which can be permuted quickly
-        std::vector<typename It::value_type> copy{first, last};
+        std::deque<typename It::value_type> copy{first, last};
         uniform_random_permutation_impl(copy.begin(), copy.end(), std::forward<Gen>(random_generator));
         std::copy(copy.begin(), copy.end(), first);
     }
 
 } // namespace prm::impl
 
-#endif // H_PRM_IMPL_UNIFORMPERMUTATION_H
+#endif // H_PRM_IMPL_UNIFORMPERMUTATIONIMPL_H

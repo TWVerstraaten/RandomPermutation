@@ -4,7 +4,7 @@
 
 #include "Tools.h"
 
-namespace prm {
+namespace prm::extra {
 
     size_t element_in_triangle(const std::vector<size_t>& p) {
         for (size_t i = 0; i != p.size(); ++i) {
