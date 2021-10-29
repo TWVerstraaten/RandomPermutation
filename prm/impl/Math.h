@@ -2,8 +2,8 @@
 // Created by pc on 22-10-21.
 //
 
-#ifndef H_PRM_MATH_H
-#define H_PRM_MATH_H
+#ifndef H_PRM_IMPL_MATH_H
+#define H_PRM_IMPL_MATH_H
 
 #include <cassert>
 #include <cmath>
@@ -18,13 +18,13 @@ namespace prm {
         return value < min ? min : value > max ? max : value;
     }
 
-    inline size_t floor_of_non_negative(double d) {
+    inline size_t floor_of_non_negative(const double d) {
         assert(d < static_cast<double>(std::numeric_limits<size_t>::max()));
         assert(d >= 0.0);
         return static_cast<size_t>(std::floor(d));
     }
 
-    inline size_t ceil_of_non_negative(double d) {
+    inline size_t ceil_of_non_negative(const double d) {
         assert(d < static_cast<double>(std::numeric_limits<size_t>::max()));
         assert(d >= 0.0);
         return static_cast<size_t>(std::ceil(d));
@@ -32,4 +32,4 @@ namespace prm {
 
 } // namespace prm
 
-#endif // H_PRM_MATH_H
+#endif // H_PRM_IMPL_MATH_H

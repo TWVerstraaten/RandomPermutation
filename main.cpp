@@ -1,10 +1,10 @@
 #include "prm/Permutation.h"
+#include "prm/SpeedTest.h"
 #include "prm/Tools.h"
 
 #include <chrono>
 #include <deque>
 #include <iomanip>
-#include "prm/SpeedTest.h"
 #include <iostream>
 #include <list>
 
@@ -19,15 +19,22 @@ void print_vector(It first, It last) {
     std::cout << "\n";
 }
 
+template <class A>
+class B : A {};
+
 int main() {
 
-//    prm::SpeedTest::mallows(0.1);
-//    prm::SpeedTest::mallows(0.5);
-//    prm::SpeedTest::mallows(0.9);
-    prm::SpeedTest::mallows(1.0);
-//    prm::SpeedTest::mallows(1.1);
-//    prm::SpeedTest::mallows(2.0);
-//    prm::SpeedTest::mallows(40.0);
+    //        1.1                 61             	441            	4205           	42851          	434889         	5193953
+    //        2                   48             	2927           	3679           	36950          	398673         	4392813
+    //        40                  72             	4358           	4285           	43251          	397211         	3525406
+
+    //    prm::SpeedTest::mallows(0.1);
+    //    prm::SpeedTest::mallows(0.5);
+    //    prm::SpeedTest::mallows(0.9);
+    //    prm::SpeedTest::mallows(1.0);
+    prm::SpeedTest::mallows(1.1);
+    prm::SpeedTest::mallows(2.0);
+    prm::SpeedTest::mallows(40.0);
 
     //    double d = 0.01;
     //    size_t n = 10000;

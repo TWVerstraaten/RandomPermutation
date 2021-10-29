@@ -5,8 +5,9 @@
 #ifndef H_PRM_PERMUTATION_H
 #define H_PRM_PERMUTATION_H
 
-#include "impl/MallowsQGreaterThanOne.h"
-#include "impl/MallowsQLessThanOne.h"
+#include "impl/MallowsImpl.h"
+#include "impl/MallowsQGreaterThenOneBase.h"
+#include "impl/MallowsQLessThanOneBase.h"
 #include "impl/UniformPermutation.h"
 #include "impl/UniformZeroOneGenerator.h"
 
@@ -25,9 +26,9 @@ namespace prm {
         if (q == 1.0) {
             uniform_random_permutation(first, last, std::forward<Gen>(generator));
         } else if (q > 1.0) {
-            impl::MallowsQGreaterThanOne<It, Gen>::permute(q, first, last, std::forward<Gen>(generator));
+            impl::MallowsImpl<It, Gen, impl::MallowsQGreaterThenOneBase>::permute(q, first, last, std::forward<Gen>(generator));
         } else {
-            impl::MallowsQLessThanOne<It, Gen>::permute(q, first, last, std::forward<Gen>(generator));
+            impl::MallowsImpl<It, Gen, impl::MallowsQLessThanOneBase>::permute(q, first, last, std::forward<Gen>(generator));
         }
     }
 

@@ -2,8 +2,8 @@
 // Created by pc on 21-10-21.
 //
 
-#ifndef H_PRM_UNIFORMZEROONEGENERATOR_H
-#define H_PRM_UNIFORMZEROONEGENERATOR_H
+#ifndef H_PRM_IMPL_UNIFORMZEROONEGENERATOR_H
+#define H_PRM_IMPL_UNIFORMZEROONEGENERATOR_H
 
 #include <random>
 
@@ -25,4 +25,4 @@ namespace prm::impl {
 
 } // namespace prm::impl
 
-#endif // H_PRM_UNIFORMZEROONEGENERATOR_H
+#endif // H_PRM_IMPL_UNIFORMZEROONEGENERATOR_H

@@ -2,16 +2,13 @@
 // Created by pc on 22-10-21.
 //
 
-#ifndef H_PRM_UNIFORMPERMUTATION_H
-#define H_PRM_UNIFORMPERMUTATION_H
+#ifndef H_PRM_IMPL_UNIFORMPERMUTATION_H
+#define H_PRM_IMPL_UNIFORMPERMUTATION_H
+
+#include "Math.h"
 
 #include <algorithm>
-#include <cassert>
-#include <cmath>
-#include <deque>
-#include <forward_list>
-#include <iostream>
-#include <list>
+#include <vector>
 
 namespace prm::impl {
 
@@ -25,20 +22,19 @@ namespace prm::impl {
         // Permute in place
         auto unmatched = std::distance(first, last);
         for (; unmatched > 1; ++first, --unmatched) {
-            assert(first != last);
             const auto k = floor_of_non_negative(unmatched * random_generator());
-            std::iter_swap(first, std::next(first, k)); // This is too expensive for list or forward_list
+            std::swap(*first, *(first + k)); // This is too expensive for list or forward_list
         }
     }
 
     template <class It, class Gen>
     std::enable_if_t<!IsRandomAccessIterator<It>::m_value, void> uniform_random_permutation_impl(It first, It last, Gen&& random_generator) {
         // Copy first into deque, which can be permuted quickly
-        std::deque<typename It::value_type> copy{first, last};
-        uniform_random_permutation_impl(copy.begin(), copy.end(), random_generator);
+        std::vector<typename It::value_type> copy{first, last};
+        uniform_random_permutation_impl(copy.begin(), copy.end(), std::forward<Gen>(random_generator));
         std::copy(copy.begin(), copy.end(), first);
     }
 
 } // namespace prm::impl
 
-#endif // H_PRM_UNIFORMPERMUTATION_H
+#endif // H_PRM_IMPL_UNIFORMPERMUTATION_H
