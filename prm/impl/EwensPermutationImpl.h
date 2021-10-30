@@ -6,23 +6,19 @@
 #define H_PRM_IMPL_EWENSPERMUTATIONIMPL_H
 
 #include "../UniformPermutation.h"
+#include "CopyIntoContainer.h"
 #include "UniformZeroOneGenerator.h"
 
 #include <cassert>
-#include <chrono>
-#include <iomanip>
-#include <iostream>
 #include <map>
-
-using namespace std::chrono;
 
 namespace prm::impl {
 
     template <class Gen>
-    [[nodiscard]] std::map<size_t, size_t> ewens_partition_impl(const double theta, const size_t n, Gen&& random_generator) {
+    [[nodiscard]] std::map<size_t, size_t> sample_ewens_cycle_structure(const double theta, const size_t n, Gen&& random_generator) {
         std::map<size_t, size_t> bin_counts = {{1, 1}};
         size_t                   count      = 1;
-        while (count < n) {
+        for (; count < n; ++count) {
             const double r = (static_cast<double>(count) + theta) * random_generator();
             if (r >= static_cast<double>(count)) {
                 ++bin_counts[1];
@@ -38,19 +34,13 @@ namespace prm::impl {
                     }
                 }
             }
-            ++count;
         }
         return bin_counts;
     }
 
-    template <class Gen>
-    [[nodiscard]] std::vector<size_t> ewens_permutation_impl(const double theta, const size_t n, Gen&& random_generator = Gen{}) {
-        const auto cycle_structure     = ewens_partition_impl(theta, n, std::forward<Gen>(random_generator));
-        const auto uniform_permutation = ::prm::uniform_random_permutation(n, std::forward<Gen>(random_generator));
-
-        std::vector<size_t> result;
-        result.resize(n);
-        size_t index = 0;
+    [[nodiscard]] std::vector<size_t> build_from_cycle_structure_and_random_permutation(const std::map<size_t, size_t>& cycle_structure, const std::vector<size_t>& uniform_permutation) {
+        std::vector<size_t> result(uniform_permutation.size());
+        size_t              index = 0;
         for (const auto [cycle_size, cycle_count] : cycle_structure) {
             if (cycle_size == 1) {
                 for (; index != cycle_count; ++index) {
@@ -70,6 +60,33 @@ namespace prm::impl {
             }
         }
         return result;
+    }
+
+    template <class Gen>
+    [[nodiscard]] std::vector<size_t> ewens_permutation_impl(const double theta, const size_t n, Gen&& random_generator = Gen{}) {
+        return build_from_cycle_structure_and_random_permutation(sample_ewens_cycle_structure(theta, n, std::forward<Gen>(random_generator)),
+                                                                 uniform_random_permutation(n, std::forward<Gen>(random_generator)));
+    }
+
+    template <class It, class Gen>
+    std::enable_if_t<std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>, void>
+    ewens_permutation_impl(const double theta, It first, It last, Gen&& random_generator) {
+        const size_t n                     = std::distance(first, last);
+        const auto   reference_permutation = ewens_permutation_impl(theta, n, std::forward<Gen>(random_generator));
+
+        std::vector<typename std::iterator_traits<It>::value_type> copy{first, last};
+
+        for (size_t i = 0; i != n; ++i) {
+            *(first + i) = copy[reference_permutation[i]];
+        }
+    }
+
+    template <class It, class Gen>
+    std::enable_if_t<!std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>, void>
+    ewens_permutation_impl(const double theta, It first, It last, Gen&& random_generator) {
+        std::vector<typename std::iterator_traits<It>::value_type> copy{first, last};
+        ewens_permutation_impl(theta, copy.begin(), copy.end(), std::forward<Gen>(random_generator));
+        std::copy(copy.begin(), copy.end(), first);
     }
 
 } // namespace prm::impl

@@ -22,6 +22,8 @@ namespace prm::impl {
         friend class MallowsPermutationImpl;
         template <class, class>
         friend class EwensImpl;
+        template <class I, class Gen>
+        friend void ewens_permutation_impl(double theta, I first, I last, Gen&& random_generator);
 
       private:
         /*!
@@ -42,10 +44,10 @@ namespace prm::impl {
     };
 
     template <class It>
-    using CopyIntoVector = CopyIntoContainer<It, std::vector<typename It::value_type>>;
+    using CopyIntoVector = CopyIntoContainer<It, std::vector<typename std::iterator_traits<It>::value_type>>;
 
     template <class It>
-    using CopyIntoDeque = CopyIntoContainer<It, std::deque<typename It::value_type>>;
+    using CopyIntoDeque = CopyIntoContainer<It, std::deque<typename std::iterator_traits<It>::value_type>>;
 
 } // namespace prm::impl
 

@@ -13,9 +13,9 @@
 
 namespace prm {
     /*!
-     * Randomly permutes the elements in [first,last) according to the Mallows distribution. A permutation p (theoretically) occurs with probability proportional to q^inv(p), where inv(p) counts the
-     * number of inversions in p. \n \n
-     * <b>NOTA BENE:</b> No comparisons of the elements in the range is made, instead, the initial (identity) ordering is inherited from simply the ordering in which the elements occur.
+     * Randomly permutes the elements in [first,last) according to the Mallows distribution.\n \n
+     *
+     * <b>NOTA BENE:</b> No comparisons of the elements in the range is made, instead, the initial (identity) ordering is inherited from simply the order in which the elements occur.
      *
      * \tparam It Iterator type of input
      * \tparam Gen Uniform 0-1 random number generator type
@@ -36,6 +36,15 @@ namespace prm {
         }
     }
 
+    /*!
+     * Returns a random permutation of {0,..,n-1}, distributed according to the Mallows distribution
+     *
+     * \tparam Gen Uniform 0-1 random number generator type
+     * \param q Parameter for Mallows permutation
+     * @param n Number of elements
+     * \param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
+     * @return A std::vector<size_t>
+     */
     template <class Gen = impl::UniformZeroOneGenerator>
     [[nodiscard]] std::vector<size_t> mallows_random_permutation(double q, size_t n, Gen&& random_generator = Gen{}) {
         auto result = impl::con::linear_vector(n);
