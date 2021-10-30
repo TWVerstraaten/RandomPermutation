@@ -12,27 +12,37 @@
 
 namespace prm::math {
 
-    /// Clamp value to the range [min, max]
-    /// \param value Value to clamp
-    /// \param min Minimum
-    /// \param max Maximum
-    /// \return The clamped value
+    /*!
+     * Clamp value to the range [min, max]
+     *
+     * \param value Value to clamp
+     * \param min Minimum
+     * \param max Maximum
+     * \return The clamped value
+     */
     template <typename T>
-    [[nodiscard]] inline T clamp(T value, T min, T max) {
+    [[nodiscard]] inline T clamp(const T value, const T min, const T max) {
         assert(min <= max);
         return value < min ? min : value > max ? max : value;
     }
-
-    /// \param d Non-negative double
-    /// \return The value d rounded down
+    /*!
+     * Round non negative number down
+     *
+     * \param d Non-negative double
+     * \return The value d rounded down
+     */
     [[nodiscard]] inline size_t floor_of_non_negative(const double d) {
         assert(d < static_cast<double>(std::numeric_limits<size_t>::max()));
         assert(d >= 0.0);
         return static_cast<size_t>(std::floor(d));
     }
 
-    /// \param d Non-negative double
-    /// \return The value d rounded up
+    /*!
+     * Round non negative number up
+     *
+     * \param d Non-negative double
+     * \return The value d rounded up
+     */
     [[nodiscard]] inline size_t ceil_of_non_negative(const double d) {
         assert(d < static_cast<double>(std::numeric_limits<size_t>::max()));
         assert(d >= 0.0);

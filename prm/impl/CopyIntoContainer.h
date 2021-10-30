@@ -9,28 +9,35 @@
 #include <vector>
 
 namespace prm::impl {
-
-    /// Object to store a copy of an iterator range into a given container
-    ///
-    /// \tparam It Input iterator type
-    /// \tparam Con Container type to store copy in
+    /*!
+     * Class that stores a copy of an iterator range into a given container
+     *
+     * \tparam It Input iterator type
+     * \tparam Con Container type to store copy in
+     */
     template <class It, class Con>
     class CopyIntoContainer {
 
         template <class, class, class, class>
-        friend class MallowsImpl;
+        friend class MallowsPermutationImpl;
+        template <class, class>
+        friend class EwensImpl;
 
       private:
-        /// \param first Iterator at start of range
-        /// \param last iterator at end of range
+        /*!
+         * Constructor
+         *
+         * \param first Iterator at start of range
+         * \param last iterator at end of range
+         */
         CopyIntoContainer(It first, It last) : m_first(first), m_last(last), m_copy({first, last}) {
         }
 
-        /// Iterator at start of range
+        /*! Iterator at start of range */
         It m_first;
-        /// iterator at end of range
+        /*! iterator at end of range */
         It m_last;
-        /// Container containing the copy
+        /*! Container containing the copy */
         Con m_copy;
     };
 

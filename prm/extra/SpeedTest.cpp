@@ -4,7 +4,7 @@
 
 #include "SpeedTest.h"
 
-#include "../Permutation.h"
+#include "../MallowsPermutation.h"
 
 #include <chrono>
 #include <iomanip>
