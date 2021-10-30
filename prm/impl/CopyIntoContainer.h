@@ -12,8 +12,8 @@ namespace prm::impl {
     /*!
      * Class that stores a copy of an iterator range into a given container
      *
-     * \tparam It Input iterator type
-     * \tparam Con Container type to store copy in
+     * @tparam It Input iterator type
+     * @tparam Con Container type to store copy in
      */
     template <class It, class Con>
     class CopyIntoContainer {
@@ -29,8 +29,8 @@ namespace prm::impl {
         /*!
          * Constructor
          *
-         * \param first Iterator at start of range
-         * \param last iterator at end of range
+         * @param first Iterator at start of range
+         * @param last iterator at end of range
          */
         CopyIntoContainer(It first, It last) : m_first(first), m_last(last), m_copy({first, last}) {
         }

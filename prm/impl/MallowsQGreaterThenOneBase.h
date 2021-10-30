@@ -16,16 +16,16 @@ namespace prm::impl {
         /*!
          * Constructor
          *
-         * \param q The parameter used to generate the random Mallows permutation
-         * \param number_of_elements Number of elements to permute
+         * @param q The parameter used to generate the random Mallows permutation
+         * @param number_of_elements Number of elements to permute
          */
         MallowsQGreaterThenOneBase(double q, size_t unmatched);
 
         /*!
          * Randomly select the index of the image of the current element to be assigned. If the remaining elements are j_0,j_1,...,j_{l-1}, then j_k will be selected.
          *
-         * \param uniform_zero_one A (pseudo) random number in the range [0,1]
-         * \return The index k
+         * @param uniform_zero_one A (pseudo) random number in the range [0,1]
+         * @return The index k
          */
         [[nodiscard]] size_t get_k(double uniform_zero_one) const;
 
@@ -33,8 +33,8 @@ namespace prm::impl {
         /*!
          * When get_k will over_flow or under_flow, use this approximation instead
          *
-         * \param uniform_zero_one A (pseudo) random number in the range [0,1]
-         * \return The index k
+         * @param uniform_zero_one A (pseudo) random number in the range [0,1]
+         * @return The index k
          */
         [[nodiscard]] size_t approximate_k(double uniform_zero_one) const;
 

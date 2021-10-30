@@ -17,16 +17,16 @@ namespace prm::impl {
         /*!
          * Constructor
          *
-         * \param q The parameter used to generate the random Mallows permutation
-         * \param number_of_elements Number of elements to permute
+         * @param q The parameter used to generate the random Mallows permutation
+         * @param number_of_elements Number of elements to permute
          */
         MallowsBase(double q, size_t number_of_elements);
 
         /*!
          * Returns log_q(x)
          *
-         * \param x The argument
-         * \return log_q(x)
+         * @param x The argument
+         * @return log_q(x)
          */
         [[nodiscard]] inline double log_base_q(double x) const {
             return std::log(x) / m_log_q;

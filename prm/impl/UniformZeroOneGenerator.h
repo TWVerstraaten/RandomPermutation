@@ -19,12 +19,12 @@ namespace prm::impl {
         /*!
          * Constructor with explicit seed for testing purposes
          *
-         * \param seed The seed
+         * @param seed The seed
          */
         explicit UniformZeroOneGenerator(size_t seed);
 
         /*!
-         * \return Random number in the range [0,1]
+         * @return Random number in the range [0,1]
          */
         double operator()();
 

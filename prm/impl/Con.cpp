@@ -15,7 +15,7 @@ namespace prm::impl::con {
         return result;
     }
 
-    void add_or_insert_one_to_map(std::map<size_t, size_t>& m, size_t key) {
+    void add_or_insert_one_into_map(std::map<size_t, size_t>& m, size_t key) {
         if (m.find(key) != m.end()) {
             ++m[key];
         } else {

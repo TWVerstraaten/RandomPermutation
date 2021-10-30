@@ -15,10 +15,10 @@ namespace prm::impl {
     /*!
      * Implementation of Mallows permutation
      *
-     * \tparam It Iterator type of input
-     * \tparam Gen Generator of random numbers in the range [0,1]
-     * \tparam Base Can be either MallowsQGreaterThenOneBase or MallowsQLessThanOneBase
-     * \tparam Copy Type of container into which the range will be copied
+     * @tparam It Iterator type of input
+     * @tparam Gen Generator of random numbers in the range [0,1]
+     * @tparam Base Can be either MallowsQGreaterThenOneBase or MallowsQLessThanOneBase
+     * @tparam Copy Type of container into which the range will be copied
      */
     template <class It, class Gen, class Base, class Copy>
     class MallowsPermutationImpl : private Base {
@@ -27,10 +27,10 @@ namespace prm::impl {
         /*!
          * Static function that does the permutation
          *
-         * \param q The parameter used to generate the random Mallows permutation
-         * \param first Iterator at start of range
-         * \param last iterator at end of range
-         * \param random_generator Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
+         * @param q The parameter used to generate the random Mallows permutation
+         * @param first Iterator at start of range
+         * @param last iterator at end of range
+         * @param random_generator Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
          */
         static void permute(const double q, It first, It last, Gen&& generator) {
             MallowsPermutationImpl<It, Gen, Base, Copy> g(q, first, last, std::move(generator));
@@ -41,10 +41,10 @@ namespace prm::impl {
         /*!
          * Constructor
          *
-         * \param q The parameter used to generate the random Mallows permutation
-         * \param first Iterator at start of range
-         * \param last iterator at end of range
-         * \param random_generator Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
+         * @param q The parameter used to generate the random Mallows permutation
+         * @param first Iterator at start of range
+         * @param last iterator at end of range
+         * @param random_generator Object such that random_generator() can be called, which produces a uniform random number in the range [0,1]
          */
         MallowsPermutationImpl(double q, It first, It last, Gen&& generator) : Base(q, std::distance(first, last)), m_random_generator(std::move(generator)), m_copiedContainer({first, last}) {
             assert(this->m_q != 1.0);

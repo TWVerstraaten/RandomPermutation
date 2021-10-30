@@ -8,20 +8,20 @@
 #include "Math.h"
 
 #include <algorithm>
-#include <deque>
-#include <iostream>
 #include <vector>
 
 namespace prm::impl {
 
     /*!
-     * Randomly permutes the elements in [first,last). Each possible permutation is (theoretically) equally likely to occur.
+     * Randomly permutes the elements in [first,last). Each possible permutation is (theoretically) equally likely to occur. \n \n
      *
-     * \tparam It Random access iterator
-     * \tparam Gen Uniform 0-1 random number generator type
-     * \param first Iterator at start of range
-     * \param last iterator at end of range
-     * \param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
+     * Random access iterator version.
+     *
+     * @tparam It Random access iterator
+     * @tparam Gen Uniform 0-1 random number generator type
+     * @param first Iterator at start of range
+     * @param last iterator at end of range
+     * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      */
     template <class It, class Gen>
     std::enable_if_t<std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>, void>
@@ -35,19 +35,21 @@ namespace prm::impl {
     }
 
     /*!
-     * Randomly permutes the elements in [first,last). Each possible permutation is (theoretically) equally likely to occur.
+     * Randomly permutes the elements in [first,last). Each possible permutation is (theoretically) equally likely to occur.\n \n
      *
-     * \tparam It Non random access iterator
-     * \tparam Gen Uniform 0-1 random number generator type
-     * \param first Iterator at start of range
-     * \param last iterator at end of range
-     * \param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
+     * Non random access iterator version. Here we first copy the range [first,last) into a vector
+     *
+     * @tparam It Non random access iterator
+     * @tparam Gen Uniform 0-1 random number generator type
+     * @param first Iterator at start of range
+     * @param last iterator at end of range
+     * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      */
     template <class It, class Gen>
     std::enable_if_t<!std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>, void>
     uniform_random_permutation_impl(It first, It last, Gen&& random_generator) {
-        // Copy first into deque, which can be permuted quickly due to random access
-        std::deque<typename std::iterator_traits<It>::value_type> copy{first, last};
+        // Copy first into vector, which can be permuted quickly due to random access
+        std::vector<typename std::iterator_traits<It>::value_type> copy{first, last};
         uniform_random_permutation_impl(copy.begin(), copy.end(), std::forward<Gen>(random_generator));
         std::copy(copy.begin(), copy.end(), first);
     }
