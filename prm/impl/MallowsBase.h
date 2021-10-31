@@ -28,9 +28,7 @@ namespace prm::impl {
          * @param x The argument
          * @return log_q(x)
          */
-        [[nodiscard]] inline double log_base_q(double x) const {
-            return std::log(x) / m_log_q;
-        }
+        [[nodiscard]]  double log_base_q(double x) const;
 
         /*! The parameter used to generate the random Mallows permutation */
         const double m_q;

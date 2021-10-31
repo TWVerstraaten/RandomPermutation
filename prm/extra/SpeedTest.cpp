@@ -4,6 +4,7 @@
 
 #include "SpeedTest.h"
 
+#include "../EwensPermutation.h"
 #include "../MallowsPermutation.h"
 
 #include <chrono>
@@ -30,6 +31,27 @@ namespace prm::extra {
             auto stop     = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start) / 7;
             std::cout << std::setw(15) << std::left << duration.count() << "\t";
+            n *= 10;
+        }
+        std::cout << "\n";
+    }
+
+    void SpeedTest::ewens(double theta) {
+        size_t n = 100;
+        std::cout << std::setw(20) << std::left << theta;
+        for (size_t j = 0; j != 5; ++j) {
+            std::list<size_t> vec;
+            for (size_t i = 0; i != n; ++i) {
+                vec.push_back(i);
+            }
+            auto start = high_resolution_clock::now();
+            for (size_t dummy = 0; dummy != 7; ++dummy) {
+                prm::ewens_random_permutation(theta, vec.begin(), vec.end());
+            }
+            auto stop     = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stop - start) / 7;
+            std::cout << std::setw(15) << std::left << duration.count() << "\t";
+            std::cout << std::flush;
             n *= 10;
         }
         std::cout << "\n";

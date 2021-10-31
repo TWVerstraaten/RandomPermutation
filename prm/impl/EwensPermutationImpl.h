@@ -18,15 +18,15 @@ namespace prm::impl {
      *
      * @tparam Gen Generator of random numbers in the range [0,1]
      * @param theta The parameter for the Ewens partition
-     * @param n The number of elements to partition
+     * @param size The number of elements to partition
      * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      * @return A cycle structure stored in an std::map<size_t, size_t>
      */
     template <class Gen>
-    [[nodiscard]] std::map<size_t, size_t> sample_ewens_cycle_structure(const double theta, const size_t n, Gen&& random_generator) {
+    [[nodiscard]] std::map<size_t, size_t> sample_ewens_cycle_structure(const double theta, const size_t size, Gen&& random_generator) {
         std::map<size_t, size_t> bin_counts = {{1, 1}};
         size_t                   count      = 1;
-        for (; count < n; ++count) {
+        for (; count < size; ++count) {
             const double r = (static_cast<double>(count) + theta) * random_generator();
             if (r >= static_cast<double>(count)) {
                 ++bin_counts[1];
@@ -36,7 +36,7 @@ namespace prm::impl {
                     const auto [bin_size, bin_count] = *it;
                     seen += bin_size * bin_count;
                     if (r <= static_cast<double>(seen)) {
-                        con::subtract_one_and_remove_if_empty(bin_counts, std::next(it).base());
+                        con::subtract_one_and_remove_if_now_zero(bin_counts, std::next(it).base());
                         con::add_or_insert_one_into_map(bin_counts, bin_size + 1);
                         break;
                     }
@@ -78,18 +78,18 @@ namespace prm::impl {
     }
 
     /*!
-     * Returns a random permutation of {0,..,n-1}, distributed according to the Ewens distribution
+     * Returns a random permutation of {0,..,size-1}, distributed according to the Ewens distribution
      *
      * @tparam Gen Generator of random numbers in the range [0,1]
      * @param theta The parameter for the Ewens partition
-     * @param n The number of elements to partition
+     * @param size The number of elements to partition
      * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      * @return
      */
     template <class Gen>
-    [[nodiscard]] std::vector<size_t> ewens_permutation_impl(const double theta, const size_t n, Gen&& random_generator = Gen{}) {
-        return build_from_cycle_structure_and_random_permutation(sample_ewens_cycle_structure(theta, n, std::forward<Gen>(random_generator)),
-                                                                 uniform_random_permutation(n, std::forward<Gen>(random_generator)));
+    [[nodiscard]] std::vector<size_t> ewens_permutation_impl(const double theta, const size_t size, Gen&& random_generator = Gen{}) {
+        return build_from_cycle_structure_and_random_permutation(sample_ewens_cycle_structure(theta, size, std::forward<Gen>(random_generator)),
+                                                                 uniform_random_permutation(size, std::forward<Gen>(random_generator)));
     }
 
     /*!
@@ -108,12 +108,12 @@ namespace prm::impl {
     template <class It, class Gen>
     std::enable_if_t<std::is_same_v<typename std::iterator_traits<It>::iterator_category, std::random_access_iterator_tag>, void>
     ewens_permutation_impl(const double theta, It first, It last, Gen&& random_generator) {
-        const size_t n                     = std::distance(first, last);
-        const auto   reference_permutation = ewens_permutation_impl(theta, n, std::forward<Gen>(random_generator));
+        const size_t size                  = std::distance(first, last);
+        const auto   reference_permutation = ewens_permutation_impl(theta, size, std::forward<Gen>(random_generator));
 
         std::vector<typename std::iterator_traits<It>::value_type> copy{first, last};
 
-        for (size_t i = 0; i != n; ++i) {
+        for (size_t i = 0; i != size; ++i) {
             *(first + i) = copy[reference_permutation[i]];
         }
     }

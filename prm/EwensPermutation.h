@@ -11,21 +11,21 @@
 namespace prm {
 
     /*!
-     * Returns a random permutation of {0,..,n-1}, distributed according to the Ewens distribution
+     * Returns a random permutation of {0,..,size-1}, distributed according to the Ewens distribution
      *
      * @tparam Gen Uniform 0-1 random number generator type
      * @param theta Parameter for Ewens permutation
-     * @param n Number of elements
+     * @param size Number of elements
      * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      * @return A std::vector<size_t>
      */
     template <class Gen = impl::UniformZeroOneGenerator>
-    [[nodiscard]] std::vector<size_t> ewens_random_permutation(const double theta, const size_t n, Gen&& random_generator = Gen{}) {
+    [[nodiscard]] std::vector<size_t> ewens_random_permutation(const double theta, const size_t size, Gen&& random_generator = Gen{}) {
         assert(theta > 0);
         if (theta == 1.0) {
-            return uniform_random_permutation(n, std::forward<Gen>(random_generator));
+            return uniform_random_permutation(size, std::forward<Gen>(random_generator));
         } else {
-            return impl::ewens_permutation_impl<Gen>(theta, n, std::forward<Gen>(random_generator));
+            return impl::ewens_permutation_impl<Gen>(theta, size, std::forward<Gen>(random_generator));
         }
     }
 
@@ -47,7 +47,7 @@ namespace prm {
         if (theta == 1.0) {
             uniform_random_permutation(first, last, std::forward<Gen>(random_generator));
         } else {
-            impl::ewens_permutation_impl(theta, first, last, std::forward<Gen>(random_generator));
+            impl::ewens_permutation_impl<It, Gen>(theta, first, last, std::forward<Gen>(random_generator));
         }
     }
 

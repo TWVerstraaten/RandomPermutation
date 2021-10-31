@@ -20,10 +20,6 @@ namespace prm::impl {
 
         template <class, class, class, class>
         friend class MallowsPermutationImpl;
-        template <class, class>
-        friend class EwensImpl;
-        template <class I, class Gen>
-        friend void ewens_permutation_impl(double theta, I first, I last, Gen&& random_generator);
 
       private:
         /*!

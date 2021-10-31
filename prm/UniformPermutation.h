@@ -12,16 +12,16 @@
 namespace prm {
 
     /*!
-     * Returns a random permutation of {0,..,n-1}, each order equally likely
+     * Returns a random permutation of {0,..,size-1}, each order equally likely
      *
      * @tparam Gen Uniform 0-1 random number generator type
-     * @param n Number of elements
+     * @param size Number of elements
      * @param random_generator Object such that random_generator() can be called producing a uniform random number in the range [0,1]
      * @return A std::vector<size_t>
      */
     template <class Gen = impl::UniformZeroOneGenerator>
-    [[nodiscard]] std::vector<size_t> uniform_random_permutation(size_t n, Gen&& random_generator = Gen{}) {
-        auto result = impl::con::linear_vector(n);
+    [[nodiscard]] std::vector<size_t> uniform_random_permutation(size_t size, Gen&& random_generator = Gen{}) {
+        auto result = impl::con::linear_vector(size);
         impl::uniform_random_permutation_impl(result.begin(), result.end(), random_generator);
         return result;
     }

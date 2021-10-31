@@ -11,6 +11,7 @@ namespace prm::extra {
 
       public:
         static void mallows(double q);
+        static void ewens(double theta);
     };
 } // namespace prm::extra
 
